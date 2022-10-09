@@ -1,27 +1,39 @@
 <template>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <!-- <p>{{ jumlah }}</p> -->
+    <canvas id="myChart" width="400" height="250"></canvas>
 </template>
 
 <script>
 import Chart from 'chart.js/auto'
 import { onMounted, ref } from '@vue/runtime-core';
+import axios from 'axios';
 
 export default {
     name: 'Chart',
-    props: {
-        jumlah: Array
-    },
-    setup(props){
+    setup(){
         onMounted(() => {
+            count()
+        })
+
+        function count(){
+            axios.get(`http://localhost:8000/api/count`)
+            .then((res) => {
+                let jumlah = res.data
+                let result = jumlah.map(a => a.total);
+                chart(result)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+
+        function chart(result){
             const ctx = document.getElementById('myChart');
-            const myChart = new Chart(ctx, {
+            let myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Perempuan', 'Laki-laki'],
                     datasets: [{
-                        label: '# of Votes',
-                        data: props.jumlah,
+                        label: 'Gender',
+                        data: result,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)'
@@ -43,10 +55,10 @@ export default {
             });
 
             myChart;
-        })
+        }
 
         return {
-            
+            count, chart
         }
     }    
 }

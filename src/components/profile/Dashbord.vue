@@ -27,7 +27,6 @@
                                         <button type="button" @click="destroy(profile.id, index)" class="btn btn-danger">Hapus</button>
                                         <Show :id="profile.id"/>
                                         <Edit :id="profile.id" />
-                                        <!-- <button type="" class="btn btn-success">Edit</button> -->
                                     </div>
                                 </td>
                             </tr>
@@ -36,7 +35,8 @@
                 </div>
             </div>
         </div>
-        <!-- <p>{{ result }}</p> -->
+    </div>
+    <div class="container">
         <Chart :jumlah="result"/>
     </div>
 </template>
@@ -44,7 +44,7 @@
 import { ref } from '@vue/reactivity';
 import Insert from './child/Insert.vue';
 import Show from './child/Show.vue';
-import { onMounted, onUpdated } from '@vue/runtime-core';
+import { onMounted } from '@vue/runtime-core';
 import { useRouter } from 'vue-router'
 import axios from 'axios';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -57,22 +57,9 @@ export default {
     setup(){
         let profiles = ref([])
         const route = useRouter();
-        let deff = Math.floor(Math.random() * 100)
-        let jumlah = []
-        let result = ref('')
-
-        //console.log(result)
-
-        // var arr = ['rijak', 'hafizhun', 'hidayat']
-        // arr[0] = 'rijal'
-        // console.log(result)
 
         onMounted(() => {
-            //console.log(localStorage.getItem('token'))
             getProfile()
-            count()
-
-            //console.log(result)
         });
 
         function getProfile(){
@@ -113,27 +100,13 @@ export default {
             })
         }
 
-        function count(){
-            axios.get(`http://localhost:8000/api/count`)
-            .then((res) => {
-                jumlah = res.data
-                result.value = jumlah.map(a => a.total);
-                //console.log(result)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }
-
         return{
-            profiles, route, deff, jumlah, result, getProfile, count, destroy, logOut
+            profiles, route, getProfile, destroy, logOut
         }
     },
 
     methods:{
         insertProfile(name, gender, id){
-            // console.log(name)
-            // console.log(gender)
-            // console.log(id)
             this.profiles.push({
                 id: id,
                 name: name,
