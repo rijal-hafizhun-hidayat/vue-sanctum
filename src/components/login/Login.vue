@@ -55,19 +55,6 @@ export default {
         let fullPage = true
 
         localStorage.clear()
-        // console.log(login.loggedInd);
-        // console.log(login.token);
-        // let loggedInd = localStorage.getItem('loggedIn');
-        // let token = localStorage.getItem('token');
-
-        // onMounted(() => {
-        //     if(login.loggedInd){
-        //         console.log(true)
-        //     }
-        //     else{
-        //         console.log(false)
-        //     }
-        // }),
 
         function log(){
             axios.get(`http://localhost:8000/sanctum/csrf-cookie`)
@@ -87,7 +74,7 @@ export default {
                         localStorage.setItem('token', res.data.token)
                         
                         return route.push({
-                            name: 'dashbord'
+                            name: 'dashboard'
                         })
                     }
                     else{

@@ -9,8 +9,8 @@ const routes = [
     component: () => import('../views/login/IndexView.vue')
   },
   {
-    path: '/dashbord',
-    name: 'dashbord',
+    path: '/dashboard',
+    name: 'dashboard',
     component: () => import('../views/profile/IndexView.vue'),
     
     //add simple middleware

@@ -67,24 +67,10 @@ export default {
         return {
             data, store
         }
-    },
-
-    // methods:{
-    //     store(){
-    //         axios.defaults.headers.post['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-    //         axios.post(`http://localhost:8000/api/profile`, {
-    //             name: this.data.name,
-    //             gender: this.data.gender
-    //         }).then((res) => {
-    //             //console.log(res.data.data.name)
-    //             this.$emit('get', res.data.data.name, res.data.data.gender, res.data.data.id)
-    //         }).catch((err) => {
-    //             console.log(err);
-    //         })
-    //     }
-    // }
+    }
 }
 </script>
+
 <style scoped>
     #btn-insert{
         margin-bottom: 30px;

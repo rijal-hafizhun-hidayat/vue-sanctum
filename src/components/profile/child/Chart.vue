@@ -4,7 +4,7 @@
 
 <script>
 import Chart from 'chart.js/auto'
-import { onMounted, ref } from '@vue/runtime-core';
+import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
 
 export default {

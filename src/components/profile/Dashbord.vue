@@ -1,5 +1,11 @@
 <template>
     <div class="container">
+        <div class="loader-spinner">
+            <loading v-model:active="isLoading"
+                :can-cancel="true"
+                :on-cancel="onCancel"
+                :is-full-page="fullPage"/>
+        </div>
         <div class="d-flex">
             <Insert @get="insertProfile" :id="deff"/>
             <button @click="logOut" id="btn-logOut" class="ms-auto btn btn-danger">Log Out</button>
@@ -50,25 +56,34 @@ import axios from 'axios';
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import Edit from './child/Edit.vue'
 import Chart from './child/Chart.vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
     name: "Dashbord",
-    components: { Insert, Show, Edit, Chart },
+    components: { Insert, Show, Edit, Chart, Loading },
     setup(){
         let profiles = ref([])
         const route = useRouter();
+        let isLoading = ref(false)
+        let fullPage = ref(true)
 
         onMounted(() => {
             getProfile()
         });
 
         function getProfile(){
+            isLoading.value = true;
             axios.get(`http://localhost:8000/api/profile`)
             .then((res) => {
                 profiles.value = res.data.data
             }).catch((err) =>{
                 console.log(err)
             })
+
+            setTimeout(() => {
+                isLoading.value = false
+            }, 1000)
         }
 
         function destroy(id, index){
@@ -101,7 +116,7 @@ export default {
         }
 
         return{
-            profiles, route, getProfile, destroy, logOut
+            profiles, route, isLoading, fullPage, getProfile, destroy, logOut
         }
     },
 
